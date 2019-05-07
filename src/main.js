@@ -28,7 +28,6 @@ Vue.directive('theme',{
       el.style.maxWidth="560px";
     }
     if(binding.arg == "column"){
-      el.style.background="#6677cc";
       el.style.padding="20px";
     }
   }

@@ -62,14 +62,15 @@
     directives:{
         'rainbow':{
             bind(el,binding,vnode){
-                el.style.color = "#" + Math.random().toString(16).slice(2,8);
+                // el.style.color = "#" + Math.random().toString(16).slice(2,8);
+                el.style.color = "##757575";
             }
         }
     }
   }
   </script>
   
-  <style>
+  <style scoped>
   #show-blogs{
       max-width: 800px;
       margin: 0 auto;
@@ -78,17 +79,21 @@
       padding: 20px;
       margin: 20px 0;
       box-sizing: border-box;
-      background-color: #eee;
-      border: 1px dotted #aaa;
+      background-color: #f3f2f2;
+      border: 1px dotted #cecece;
   }
   #show-blogs a{
       text-decoration: none;
-      color: #444;
+      color: #5d5c5c;
   }
   input[type="text"]{
       box-sizing: border-box;
-      padding: 8px;
+      padding: 12px;
       width: 100%;
+  }
+  h1{
+      text-align: center;
+      color: #004582;
   }
   </style>
   

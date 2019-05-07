@@ -15,10 +15,10 @@
 
 <style scoped>
     nav{
-      background-color: crimson;
-      padding: 30px 0;
-      max-width: 1300px;
-      margin: 0 auto 40px;
+      padding: 10px 0;
+      max-width: 1260px;
+      margin: 0 auto;
+      background-color: #24a3b7;
     }
     ul{
         list-style-type: none;
@@ -37,7 +37,7 @@
         color: #fff;
     }
     .router-link-active{
-        background-color: rgba(255,255,255,0.8);
+        background-color: rgba(255,255,255,0.7);
         color: #444;
     }
 </style>

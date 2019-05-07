@@ -1,7 +1,7 @@
 <template>
-    <div id="add-blog">
+    <div id="edit-blog">
         <div v-if="!submitted">
-            <h2>添加博客</h2>
+            <h2>编辑博客</h2>
             <form>
                 <label>博客标题
                     <input type="text" placeholder="请输入博客标题" v-model="blog.title" required>
@@ -33,9 +33,14 @@
                         <option v-for="(author, index) in authors" :key="index">{{author}}</option>
                     </select>
                 </label>
-                <button v-on:click.prevent="addBlog">添加博客</button>
+                <button v-on:click.prevent="editBlog">提交修改</button>
             </form>
-            <hr>
+        </div>
+
+        <div v-else>
+            <h2>修改博客成功</h2>
+        </div>
+        <!-- <hr>
             <div id="preview">
                 <h3>博客总览</h3>
                 <p>博客标题：{{blog.title}}</p>
@@ -46,11 +51,7 @@
                     <li v-for="(category, index) in blog.categories" :key="index">{{category}}</li>
                 </ul>
                 <p>博客作者：{{blog.author}}</p>
-            </div>
-        </div>
-        <div v-else>
-            <h2>你已经添加博客成功</h2>
-        </div>
+            </div> -->
     </div>
 </template>
 
@@ -59,7 +60,7 @@
     import AV from '../leancloud.js'
     var Blog = AV.Object.extend('Blog'); // (数据库名)。只注册一次
     export default {
-        name: 'add-blog',
+        name: 'edit-blog',
         data() {
             return {
                 blog: {
@@ -68,17 +69,31 @@
                     categories: [],//array checkbox
                     author: ''
                 },
+                id: this.$route.params.id,
                 authors: ["Henry", "Lisa", "Jack"], // array select
                 submitted: false
             }
         },
+        created() {
+            var query = new AV.Query('Blog');
+            query.get(this.id).then((res) => {
+                console.log(res)
+                this.blog = res._serverData
+            })
+                .catch((error) => {
+                    console.log(error)
+                })
+        },
         methods: {
-            addBlog() {
-                var blog = new Blog();
+            editBlog() {
+                var blog = AV.Object.createWithoutData('Blog', this.id);
                 blog.save(this.blog)
                     .then((res) => {
                         console.log(res)
-                        this.submitted = true
+                        this.submitted = true;
+                        setTimeout(() => {
+                            this.$router.replace({path:'/'})
+                        }, 3000);
                     })
                     .catch((error) => {
                         console.log(error)
@@ -95,17 +110,12 @@
 </script>
 
 <style scoped>
-    h2 {
-        text-align: center;
-        color: #004582;
-    }
-
-    #add-blog * {
+    #edit-blog * {
         box-sizing: border-box;
         color: #757575;
     }
 
-    #add-blog {
+    #edit-blog {
         padding: 20px;
         margin: 20px auto;
         max-width: 600px;
@@ -145,7 +155,7 @@
         margin-right: 10px;
     }
 
-    #add-blog button {
+    #edit-blog button {
         display: block;
         margin: 20px 0;
         background-color: #24a3b7;
@@ -165,5 +175,9 @@
 
     h3 {
         margin-top: 10px;
+    }
+    h2{
+      text-align: center;
+      color: #004582;
     }
 </style>
